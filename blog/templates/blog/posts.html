@@ -31,9 +31,21 @@
         <div class="post-form-header bg-primary">
           <h3>Say Something...</h3>
         </div>
-        <form class="form my-1">
-          <textarea cols="30" rows="5" placeholder="Create a post"></textarea>
-          <input type="submit" value="Submit" class="btn btn-dark my-1" />
+        <form action="" class="form my-1" method="post">
+          {% csrf_token %} 
+          <textarea
+            name="title"
+            cols="30"
+            rows="5"
+            placeholder="title of post"
+          ></textarea> 
+          <textarea
+            name="body"
+            cols="30"
+            rows="5"
+            placeholder="body of post*"
+          ></textarea>
+          <input type="submit" class="btn btn-dark my-1" value="Submit" />
         </form>
         <div class="posts">
           {% for p in posts %}
