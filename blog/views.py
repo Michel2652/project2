@@ -9,9 +9,29 @@ def index(request):
 
 
 
+
 def posts(request):
-    posts=Post.objects.all().order_by('-created_at')[:10]
-    return render(request,'blog/posts.html',{'posts':posts})
+    if request.method== 'GET' :
+        posts=Post.objects.all().order_by('-created_at')[:100]
+        return render(request,'blog/posts.html',{'posts':posts})
+    
+    elif request.method == 'POST' :
+            body=request.POST.get('body')
+            if request.POST.get('title') :
+                title=request.POST.get('title')
+            else :
+                title =body[:4]
+            
+            post=Post(
+                body=body,
+                author= UserProfile.objects.get(id=request.user.id) ,
+                title=title
+            )
+            post.save()
+            posts=Post.objects.all().order_by('-created_at')[:100]
+            return render(request,'blog/posts.html',{'posts':posts})
+
+
 
 
 def post(request,slug):
